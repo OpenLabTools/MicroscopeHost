@@ -86,7 +86,9 @@ class MicroscopeClient(QtGui.QWidget):
 
         self.set_defaults()
 
-        self.newPixmap.connect(self.frame_display.updateFrame)
+        #self.newPixmap.connect(self.frame_display.updateFrame)
+        self.connect(self, QtCore.SIGNAL("newPixmap(const QPixmap)"),
+                     self.frame_display.updateFrame)
 
         #Start the frame processing thread
         self.connect(self.thread, QtCore.SIGNAL("renderedImage(const QImage)"),
@@ -362,7 +364,7 @@ class MicroscopeClient(QtGui.QWidget):
     def update_frame(self, frame):
         '''Resend signal from frame thread to frame widget'''
         self.pixmap = QtGui.QPixmap.fromImage(frame)
-        self.newPixmap.emit(self.pixmap)
+        self.emit(QtCore.SIGNAL("newPixmap(const QPixmap)"), self.pixmap)
         self.update()
 
 if __name__ == "__main__":
