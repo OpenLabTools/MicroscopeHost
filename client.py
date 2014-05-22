@@ -42,9 +42,9 @@ class FrameThread(QtCore.QThread):
             self.tracker.params = self.params
             self.mutex.unlock()
 
-            #ret, self.img = self.camera.read()
-            self.img = cv2.imread('tracking_fig01.jpg')
-            time.sleep(0.25)
+            ret, self.img = self.camera.read()
+            #self.img = cv2.imread('tracking_fig01.jpg')
+            #time.sleep(0.25)
 
             self.img = self.tracker.process_frame(self.img)
 
