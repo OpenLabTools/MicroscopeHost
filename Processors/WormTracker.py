@@ -229,14 +229,14 @@ class Tracker():
                     pickle.dump(row, self.tracking_log)
 
             if self.y < self.params['margin']:
-                self.microscope.move('y', -1*self.params['step_size'])
+                self.microscope.move('y', self.params['step_size'])
                 print 'Moving Up'
                 if self.record:
                     row = ('step', self.time, 'y', -1)
                     pickle.dump(row, self.tracking_log)
 
             if self.y > (self.height - self.params['margin']):
-                self.microscope.move('y', self.params['step_size'])
+                self.microscope.move('y', -1*self.params['step_size'])
                 print 'Moving Down'
                 if self.record:
                     row = ('step', self.time, 'y', 1)
