@@ -341,7 +341,7 @@ class MicroscopeClient(QtGui.QWidget):
         self.params['smoothing'] = self.spline_smoothing.value()
         self.params['centre_points'] = self.centre_line.value()
         self.params['refine'] = self.refine.isChecked()
-        self.params['record'] = self.refine.isChecked()
+        self.params['record'] = self.record.isChecked()
 
         #Disable thresholding params depending on mode
         if self.params['adaptive']:
