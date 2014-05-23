@@ -11,7 +11,7 @@ import cv2
 class Tracker():
     """Class for worm tracking algorithm"""
 
-    def __init__(self, microscope):
+    def __init__(self, microscope, log_suffix):
         """Initializes the class with serial interface/camera names,
         algorithm control parameters.
 
@@ -32,10 +32,10 @@ class Tracker():
         self.smoothing = 100
         self.draw_contour = True
 
-        self.tracking_log = open('tracking.pickle', 'ab')
-
-        self.contour_log = open('contour.pickle', 'ab')
-        self.skeleton_log = open('skeleton.pickle', 'ab')
+        self.tracking_log = open('tracking%s.pickle' % log_suffix, 'ab')
+        self.contour_log = open('contour%s.pickle' % log_suffix, 'ab')
+        self.skeleton_log = open('skeleton%s.pickle' % log_suffix, 'ab')
+        self.head_tail_log = open('head_tail%s.pickle' % log_suffix, 'ab')
 
     def find_worm(self):
         """Threshold and contouring algorithm to find centroid of worm"""
@@ -141,6 +141,9 @@ class Tracker():
 
         self.head[0] = int(x[head_n])
         self.head[1] = int(y[head_n])
+
+        if self.record:
+            pickle.dump((self.time, self.head, self.tail), self.head_tail_log)
 
         tail_p = points[tail_n]
         head_p = points[head_n]

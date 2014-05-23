@@ -22,11 +22,11 @@ class FrameDisplay(QtGui.QLabel):
 class FrameThread(QtCore.QThread):
     '''Grabs and processes camera frames and signals when ready'''
 
-    def __init__(self, microscope):
+    def __init__(self, microscope, log_suffix):
         super(FrameThread, self).__init__()
         self.camera = cv2.VideoCapture(0)
 
-        self.tracker = Tracker(microscope)
+        self.tracker = Tracker(microscope, log_suffix)
         self.mutex = QtCore.QMutex()
         self.abort = False
         self.condition = QtCore.QWaitCondition()
@@ -73,7 +73,7 @@ class MicroscopeClient(QtGui.QWidget):
 
     newPixmap = QtCore.Signal(QtGui.QPixmap)
 
-    def __init__(self, serial_port):
+    def __init__(self, serial_port, log_suffix):
         super(MicroscopeClient, self).__init__()
 
         self.microscope = Microscope(serial_port)
@@ -82,7 +82,7 @@ class MicroscopeClient(QtGui.QWidget):
         self.init_ui()
 
         self.params = {}
-        self.thread = FrameThread(self.microscope)
+        self.thread = FrameThread(self.microscope, log_suffix)
 
         self.set_defaults()
 
@@ -369,7 +369,7 @@ class MicroscopeClient(QtGui.QWidget):
 
 if __name__ == "__main__":
     app = QtGui.QApplication(sys.argv)
-    widget = MicroscopeClient(sys.argv[1])
+    widget = MicroscopeClient(sys.argv[1], sys.argv[2])
     widget.show()
     r = app.exec_()
     widget.thread.stop()
