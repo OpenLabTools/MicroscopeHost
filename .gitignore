@@ -49,6 +49,8 @@ coverage.xml
 *.log
 *.pot
 
+# Pickle:
+*.pickle
+
 # Sphinx documentation
 docs/_build/
-
