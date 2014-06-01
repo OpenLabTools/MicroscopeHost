@@ -6,7 +6,7 @@ from PySide import QtCore
 from PySide import QtGui
 
 from Processors.WormTracker import Tracker
-from interface import Microscope
+from Microscope import Interface
 
 
 class FrameDisplay(QtGui.QLabel):
@@ -42,8 +42,8 @@ class FrameThread(QtCore.QThread):
             self.tracker.params = self.params
             self.mutex.unlock()
 
-            ret, self.img = self.camera.read()
-            #self.img = cv2.imread('tracking_fig01.jpg')
+            #ret, self.img = self.camera.read()
+            self.img = cv2.imread('tracking_fig01.jpg')
             time.sleep(0.2)
 
             self.img = self.tracker.process_frame(self.img)
@@ -76,7 +76,7 @@ class MicroscopeClient(QtGui.QWidget):
     def __init__(self, serial_port, log_suffix):
         super(MicroscopeClient, self).__init__()
 
-        self.microscope = Microscope(serial_port)
+        self.microscope = Interface(serial_port)
         self.microscope.set_ring_colour('FF0000')
 
         self.init_ui()

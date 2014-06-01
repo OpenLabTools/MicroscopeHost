@@ -1,12 +1,10 @@
-__author__ = 'james'
-
 import serial
 from time import sleep
 
 from PySide import QtCore
 
 
-class Microscope:
+class Interface:
     """Abstracts the serial command interface to the OpenLabTools microscope"""
 
     def __init__(self, port):
