@@ -3,6 +3,9 @@ MicroscopeHost
 
 Host Application for the OpenLabTools Microscope
 
+![Screenshot of Application]
+(https://raw.githubusercontent.com/OpenLabTools/MicroscopeHost/master/screenshot.png)
+
 To run:
 
 ```bash
